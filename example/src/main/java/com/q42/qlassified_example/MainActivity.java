@@ -3,21 +3,21 @@ package com.q42.qlassified_example;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.q42.qlassified.Qlassified;
-import com.q42.qlassified.Storage.QlassifiedSharedPreferencesService;
+import com.q42.qlassified.EncryptedPreferrences;
+import com.q42.qlassified.Logger;
 
 public class MainActivity extends Activity implements View.OnClickListener{
 
+    private final String TAG = MainActivity.class.getSimpleName();
+
     private EditText putKeyText;
     private EditText putValueText;
-
     private EditText getValueText;
 
     @Override
@@ -36,10 +36,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         putButton.setOnClickListener(this);
         getButton.setOnClickListener(this);
-
-        // We can add our own storage service like so;
-        Qlassified.Service.start(this);
-        Qlassified.Service.setStorageService(new QlassifiedSharedPreferencesService(this, getString(R.string.storage_name)));
     }
 
     @Override
@@ -47,16 +43,26 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         switch(view.getId()) {
             case R.id.put_classified_button:
-                Qlassified.Service.put(
-                        putKeyText.getText().toString(),
-                        putValueText.getText().toString()
-                );
+                try {
+                    EncryptedPreferrences.putString(putKeyText.getText().toString(), putValueText.getText().toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Logger.e(TAG, "Exception: "+e.getMessage());
+                }
+
                 putKeyText.setText(null);
                 putValueText.setText(null);
                 closeKeyobard();
                 break;
             case R.id.get_classified_button:
-                String string = Qlassified.Service.getString(getValueText.getText().toString());
+                String string = "";
+                try {
+                    string = EncryptedPreferrences.getString(getValueText.getText().toString());
+                }catch (Exception e) {
+                    e.printStackTrace();
+                    Logger.e(TAG, "Exception: "+e.getMessage());
+                }
+
                 Snackbar snackbar = Snackbar.make(
                         findViewById(android.R.id.content),
                         (string != null)

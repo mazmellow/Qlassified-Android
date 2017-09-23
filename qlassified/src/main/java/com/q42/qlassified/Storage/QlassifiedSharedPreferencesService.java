@@ -1,8 +1,6 @@
 package com.q42.qlassified.Storage;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.q42.qlassified.Entry.EncryptedEntry;
 import com.q42.qlassified.Logger;
@@ -11,8 +9,8 @@ public class QlassifiedSharedPreferencesService extends QlassifiedStorageService
 
     private final SharedPreferences preferences;
 
-    public QlassifiedSharedPreferencesService(Context context) {
-        this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
+    public QlassifiedSharedPreferencesService(SharedPreferences preferences) {
+        this.preferences = preferences;
     }
 
     @Override
