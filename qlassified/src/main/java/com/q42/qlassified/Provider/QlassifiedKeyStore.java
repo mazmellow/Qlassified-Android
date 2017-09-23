@@ -7,18 +7,35 @@ import android.provider.Settings;
 import android.security.KeyPairGeneratorSpec;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
-import android.util.Log;
-import com.q42.qlassified.Entry.*;
 
-import javax.security.auth.x500.X500Principal;
+import com.q42.qlassified.Entry.EncryptedEntry;
+import com.q42.qlassified.Entry.QlassifiedBoolean;
+import com.q42.qlassified.Entry.QlassifiedEntry;
+import com.q42.qlassified.Entry.QlassifiedFloat;
+import com.q42.qlassified.Entry.QlassifiedInteger;
+import com.q42.qlassified.Entry.QlassifiedLong;
+import com.q42.qlassified.Entry.QlassifiedString;
+import com.q42.qlassified.Logger;
+
 import java.io.IOException;
 import java.math.BigInteger;
-import java.security.*;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.PrivateKey;
+import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.RSAKeyGenParameterSpec;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import javax.security.auth.x500.X500Principal;
 
 @TargetApi(18)
 public class QlassifiedKeyStore implements QlassifiedSecurity {
@@ -107,8 +124,8 @@ public class QlassifiedKeyStore implements QlassifiedSecurity {
         }
 
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
-        Log.d("KeyStore", String.format("Public key: %s", keyPair.getPublic()));
-        Log.d("KeyStore", String.format("Private key: %s", keyPair.getPrivate()));
+        Logger.d("KeyStore", String.format("Public key: %s", keyPair.getPublic()));
+        Logger.d("KeyStore", String.format("Private key: %s", keyPair.getPrivate()));
     }
 
     private String getUniqueDeviceId(Context context) {
@@ -159,7 +176,7 @@ public class QlassifiedKeyStore implements QlassifiedSecurity {
                 NoSuchAlgorithmException |
                 InvalidKeyException |
                 InvalidAlgorithmParameterException e) {
-            Log.e("QlassifiedKeyStore", String.format("Could not create a KeyStore instance. Stacktrace: %s", e));
+            Logger.e("QlassifiedKeyStore", String.format("Could not create a KeyStore instance. Stacktrace: %s", e));
             return false;
         }
     }
@@ -178,7 +195,7 @@ public class QlassifiedKeyStore implements QlassifiedSecurity {
         } catch (NoSuchAlgorithmException |
                 UnrecoverableEntryException |
                 KeyStoreException e) {
-            Log.e("QlassifiedKeyStore", String.format("Could not encrypt this string. Stacktrace: %s", e));
+            Logger.e("QlassifiedKeyStore", String.format("Could not encrypt this string. Stacktrace: %s", e));
             return null;
         }
     }
@@ -197,7 +214,7 @@ public class QlassifiedKeyStore implements QlassifiedSecurity {
         } catch (NoSuchAlgorithmException |
                 UnrecoverableEntryException |
                 KeyStoreException e) {
-            Log.e("QlassifiedKeyStore", String.format("Could not decrypt this string. Stacktrace: %s", e));
+            Logger.e("QlassifiedKeyStore", String.format("Could not decrypt this string. Stacktrace: %s", e));
             return null;
         }
     }

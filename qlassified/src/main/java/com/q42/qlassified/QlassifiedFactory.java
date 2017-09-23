@@ -1,8 +1,8 @@
 package com.q42.qlassified;
 
 import android.content.Context;
-import android.util.Log;
 
+import com.q42.qlassified.Entry.EncryptedEntry;
 import com.q42.qlassified.Entry.QlassifiedBoolean;
 import com.q42.qlassified.Entry.QlassifiedEntry;
 import com.q42.qlassified.Entry.QlassifiedFloat;
@@ -10,7 +10,6 @@ import com.q42.qlassified.Entry.QlassifiedInteger;
 import com.q42.qlassified.Entry.QlassifiedLong;
 import com.q42.qlassified.Entry.QlassifiedSerializable;
 import com.q42.qlassified.Entry.QlassifiedString;
-import com.q42.qlassified.Entry.EncryptedEntry;
 import com.q42.qlassified.Provider.QlassifiedGuard;
 import com.q42.qlassified.Provider.QlassifiedKeyStore;
 import com.q42.qlassified.Provider.QlassifiedSecurity;
@@ -41,7 +40,7 @@ public class QlassifiedFactory {
                 this.keyStore = new QlassifiedGuard();
             }
         } catch (KeyStoreException | CertificateException | IOException | NoSuchAlgorithmException e) {
-            Log.e("Qlassified", String.format("The Keystore could not be created. Stacktrace: %s", e));
+            Logger.e("Qlassified", String.format("The Keystore could not be created. Stacktrace: %s", e));
             return false;
         }
         return true;

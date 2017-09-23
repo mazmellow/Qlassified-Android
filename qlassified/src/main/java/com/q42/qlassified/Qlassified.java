@@ -2,7 +2,6 @@ package com.q42.qlassified;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.q42.qlassified.Entry.QlassifiedBoolean;
 import com.q42.qlassified.Entry.QlassifiedFloat;
@@ -62,7 +61,7 @@ public enum Qlassified {
      */
     public void setStorageService(@NonNull QlassifiedStorageService service) {
         if(service == null) {
-            Log.e("Qlassified","Storage service prodided is null");
+            Logger.e("Qlassified","Storage service prodided is null");
             return;
         }
         classifiedFactory.setStorageService(service);

@@ -1,18 +1,21 @@
 package com.q42.qlassified.Provider;
 
 import android.util.Base64;
-import android.util.Log;
+
+import com.q42.qlassified.Logger;
+
 import org.spongycastle.jce.provider.BouncyCastleProvider;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.interfaces.RSAPublicKey;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 public class QlassifiedCrypto {
 
@@ -37,7 +40,7 @@ public class QlassifiedCrypto {
                 NoSuchPaddingException |
                 UnsupportedEncodingException |
                 InvalidKeyException e) {
-            Log.e("QlassifiedCrypto", String.format("Could not encrypt this string. Stacktrace: %s", e));
+            Logger.e("QlassifiedCrypto", String.format("Could not encrypt this string. Stacktrace: %s", e));
             return null;
         }
     }
@@ -58,7 +61,7 @@ public class QlassifiedCrypto {
                 NoSuchAlgorithmException |
                 NoSuchPaddingException |
                 InvalidKeyException e) {
-            Log.e("QlassifiedCrypto", String.format("Could not decrypt this string. Stacktrace: %s", e));
+            Logger.e("QlassifiedCrypto", String.format("Could not decrypt this string. Stacktrace: %s", e));
             return null;
         }
     }

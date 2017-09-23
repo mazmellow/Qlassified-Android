@@ -2,16 +2,17 @@ package com.q42.qlassified.Storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
+import android.preference.PreferenceManager;
 
 import com.q42.qlassified.Entry.EncryptedEntry;
+import com.q42.qlassified.Logger;
 
 public class QlassifiedSharedPreferencesService extends QlassifiedStorageService {
 
     private final SharedPreferences preferences;
 
-    public QlassifiedSharedPreferencesService(Context context, String storageName) {
-        this.preferences = context.getSharedPreferences(storageName, 0);
+    public QlassifiedSharedPreferencesService(Context context) {
+        this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Override
@@ -19,15 +20,15 @@ public class QlassifiedSharedPreferencesService extends QlassifiedStorageService
         SharedPreferences.Editor editor = this.preferences.edit();
         editor.putString(encryptedEntry.getKey(), encryptedEntry.getEncryptedValue());
         editor.apply();
-        Log.d("Storage", String.format("Saved key: %s", encryptedEntry.getKey()));
-        Log.d("Storage", String.format("Saved encrypted value: %s", encryptedEntry.getEncryptedValue()));
+        Logger.d("Storage", String.format("Saved key: %s", encryptedEntry.getKey()));
+        Logger.d("Storage", String.format("Saved encrypted value: %s", encryptedEntry.getEncryptedValue()));
     }
 
     @Override
     public EncryptedEntry onGetRequest(String key) {
-        Log.d("Storage", String.format("Get by key: %s", key));
+        Logger.d("Storage", String.format("Get by key: %s", key));
         final String encryptedValue = this.preferences.getString(key, null);
-        Log.d("Storage", String.format("Got encrypted value: %s", encryptedValue));
+        Logger.d("Storage", String.format("Got encrypted value: %s", encryptedValue));
         return new EncryptedEntry(key, encryptedValue);
     }
 }
