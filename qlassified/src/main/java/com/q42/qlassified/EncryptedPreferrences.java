@@ -55,7 +55,7 @@ public class EncryptedPreferrences {
             }
 
             String keyVector = md5Key(AES_VECTOR);
-            if (!sharedPreferences.contains(AES_VECTOR)) {
+            if (!sharedPreferences.contains(keyVector)) {
                 KeyGenerator keyGen = KeyGenerator.getInstance("AES");
                 keyGen.init(128);
                 SecretKey secretKey = keyGen.generateKey();
