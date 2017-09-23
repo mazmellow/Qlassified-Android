@@ -26,8 +26,9 @@ String value = EncryptedPreferrences.getString("YOUR_KEY");
 
 Available data types at the moment:
 
-* Boolean
-* Float
 * Integer
+* Float
+* Double
 * Long
+* Boolean
 * String
